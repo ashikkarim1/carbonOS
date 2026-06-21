@@ -84,8 +84,13 @@ nav.topnav .wrap{display:flex;align-items:center;justify-content:space-between;h
   display:flex;justify-content:space-between;color:var(--muted)}
 .dd-foot a{color:var(--green-d);font-weight:600}
 .navbtns{display:flex;gap:10px;align-items:center}
-.mob-toggle{display:none;background:none;border:0;cursor:pointer}
-.mob-toggle svg{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:2}
+.mob-toggle{display:none;background:none;border:0;cursor:pointer;padding:6px;border-radius:6px;transition:.15s}
+.mob-toggle:hover{background:var(--mist)}
+.mob-toggle svg{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:2;display:block}
+.mob-toggle .x{display:none}
+nav.topnav.nav-open .mob-toggle .burger{display:none}
+nav.topnav.nav-open .mob-toggle .x{display:block}
+body.nav-lock{overflow:hidden}
 
 /* generic section base */
 .sec{padding:72px 0}
@@ -379,6 +384,27 @@ footer.site .bottom .links a{margin-right:18px}
   .navlinks,.util .left,.util .right .hide-mob{display:none}
   .mob-toggle{display:block}
   .navbtns .btn-outline{display:none}
+  nav.topnav.nav-open .navlinks{
+    display:flex;flex-direction:column;align-items:stretch;
+    position:absolute;top:100%;left:0;right:0;
+    background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:10px 24px 22px;gap:0;
+    box-shadow:0 24px 40px -20px rgba(14,27,20,.16);
+    max-height:calc(100vh - 72px);overflow-y:auto
+  }
+  nav.topnav.nav-open .navlinks > div{width:100%;padding:0;cursor:default}
+  nav.topnav.nav-open .navlinks > div > a,
+  nav.topnav.nav-open .navlinks > div > span{
+    display:block;padding:16px 4px;font-size:16px;font-weight:500;
+    border-bottom:1px solid var(--line);border-radius:0;color:var(--ink)
+  }
+  nav.topnav.nav-open .navlinks > div:hover > a,
+  nav.topnav.nav-open .navlinks > div:hover > span{border-color:var(--line);color:var(--green-d)}
+  nav.topnav.nav-open .navlinks .caret{display:none}
+  nav.topnav.nav-open .navlinks .dropdown{display:none!important}
+  nav.topnav.nav-open .navlinks::after{
+    content:'';display:block;padding-top:16px;
+  }
   footer.site .cols{grid-template-columns:1fr 1fr;gap:30px 20px}
   .ctaband .right{justify-content:flex-start}
   .pricegrid{grid-template-columns:1fr 1fr}
