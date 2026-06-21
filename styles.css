@@ -1,7 +1,7 @@
 :root{
   --ink:#0E1B14;
   --slate:#46544C;
-  --muted:#7A857E;
+  --muted:#5E6A63;
   --line:#E4E7E3;
   --paper:#FFFFFF;
   --mist:#F6F8F5;
@@ -14,12 +14,23 @@
   --amber:#D08C20;
   --blue:#1C4D8F;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-  --serif:'Georgia','Times New Roman',serif;
+  --serif:'Newsreader','Tiempos Headline','Source Serif 4',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono','SF Mono','Menlo','Consolas',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--slate);font-family:var(--sans);
-  -webkit-font-smoothing:antialiased;line-height:1.6;font-size:16px}
+  -webkit-font-smoothing:antialiased;line-height:1.6;font-size:16px;
+  font-feature-settings:"ss01","cv11"}
+.serif{font-feature-settings:"ss03"}
+/* Tabular figures wherever numbers stack — tables, prices, mockups, stats */
+.cmptable, .cmptable td, .cmptable th,
+.stats .num, .mtile .v, .mtile-sm .v,
+.proj .price, .proj .stats-r .v,
+.mock-bar, .plan .price,
+.tstep .n, .osrow .lay .num,
+table, .quotebox .who .av,
+[data-numeric]{font-variant-numeric:tabular-nums;font-feature-settings:"tnum","lnum"}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
