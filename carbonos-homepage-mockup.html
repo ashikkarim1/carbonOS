@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CarbonOS — The Carbon Project Operating System</title>
+<style>
+  :root{
+    --ink:#0E1B14;          /* near-black, green-tinted */
+    --slate:#46544C;        /* body text */
+    --muted:#7A857E;        /* secondary */
+    --line:#E4E7E3;         /* hairlines */
+    --paper:#FFFFFF;
+    --mist:#F6F8F5;         /* light section bg */
+    --sage:#EEF3EC;         /* tint blocks */
+    --green:#1A6F49;        /* primary brand */
+    --green-d:#124E34;      /* deep */
+    --green-l:#2E9468;      /* lighter accent */
+    --gold:#B8893B;         /* restrained accent */
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    --serif:'Georgia','Times New Roman',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--slate);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;line-height:1.6;font-size:16px}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  h1,h2,h3{color:var(--ink);font-weight:600;letter-spacing:-.01em;line-height:1.12}
+  .serif{font-family:var(--serif);font-weight:400;letter-spacing:0}
+  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+  .btn{display:inline-block;font-size:14.5px;font-weight:500;padding:13px 24px;border-radius:4px;
+    cursor:pointer;border:1px solid transparent;transition:.18s ease;font-family:var(--sans)}
+  .btn-primary{background:var(--green);color:#fff}
+  .btn-primary:hover{background:var(--green-d)}
+  .btn-outline{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn-outline:hover{border-color:var(--ink)}
+  .btn-light{background:#fff;color:var(--green-d)}
+  .btn-light:hover{background:var(--sage)}
+
+  /* top utility */
+  .util{border-bottom:1px solid var(--line);background:#fff}
+  .util .wrap{display:flex;justify-content:flex-end;gap:26px;height:38px;align-items:center;
+    font-size:12.5px;color:var(--muted)}
+  .util a:hover{color:var(--ink)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:600;color:var(--ink);
+    letter-spacing:-.01em}
+  .logo .mk{width:13px;height:13px;border-radius:50%;background:var(--green);display:inline-block}
+  .navlinks{display:flex;gap:34px;font-size:15px;color:var(--ink);font-weight:500}
+  .navlinks a{padding:6px 0;border-bottom:2px solid transparent}
+  .navlinks a:hover{border-color:var(--green);color:var(--green-d)}
+  .navbtns{display:flex;gap:12px;align-items:center}
+
+  /* hero */
+  .hero{padding:58px 0 52px;border-bottom:1px solid var(--line)}
+  .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,4.6vw,56px);margin:14px 0 18px}
+  .hero h1 .accent{color:var(--green)}
+  .hero p.lead{font-size:18px;color:var(--slate);max-width:30em;line-height:1.55}
+  .hero .cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .hero .note{margin-top:18px;font-size:13px;color:var(--muted)}
+
+  /* hero visual: flat line-globe */
+  .visual{position:relative;aspect-ratio:1/1;max-width:460px;margin-left:auto}
+  .visual svg{width:100%;height:100%;display:block}
+
+  /* trust row */
+  .trust{background:var(--mist);border-bottom:1px solid var(--line);padding:30px 0}
+  .trust .wrap{display:flex;align-items:center;gap:34px;flex-wrap:wrap;justify-content:space-between}
+  .trust .lab{font-size:13px;color:var(--muted);max-width:18em;line-height:1.5}
+  .logos{display:flex;gap:38px;align-items:center;flex-wrap:wrap;opacity:.62}
+  .logos span{font-weight:600;color:var(--ink);font-size:16px;letter-spacing:.02em}
+
+  /* stat band */
+  .stats{padding:44px 0}
+  .stats .row{display:grid;grid-template-columns:repeat(4,1fr)}
+  .stats .s{padding:6px 30px;border-left:1px solid var(--line)}
+  .stats .s:first-child{border-left:none;padding-left:0}
+  .stats .num{font-family:var(--serif);font-size:44px;color:var(--ink);line-height:1;letter-spacing:-.01em}
+  .stats .num .u{font-family:var(--sans);font-size:16px;color:var(--green);font-weight:600;margin-left:6px;letter-spacing:0}
+  .stats .lab{margin-top:9px;font-size:13.5px;color:var(--slate);line-height:1.45}
+
+  /* section base */
+  .sec{padding:60px 0}
+  .sec.alt{background:var(--mist);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sec-head{max-width:42em}
+  .sec-head h2{font-size:clamp(26px,3.2vw,38px);margin:10px 0 12px}
+  .sec-head p{font-size:16.5px;color:var(--slate);line-height:1.5}
+
+  /* capabilities */
+  .caps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
+  .cap{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 20px 20px;
+    transition:.18s ease}
+  .cap:hover{border-color:var(--green);transform:translateY(-3px)}
+  .cap .ic{width:40px;height:40px;border-radius:8px;background:var(--sage);display:flex;
+    align-items:center;justify-content:center;margin-bottom:14px;color:var(--green-d)}
+  .cap .ic svg{width:21px;height:21px}
+  .cap h3{font-size:17px;margin-bottom:7px}
+  .cap p{font-size:13.5px;color:var(--slate);line-height:1.5}
+  .cap .lk{margin-top:12px;font-size:13px;font-weight:600;color:var(--green)}
+
+  /* product suite */
+  .suite{display:flex;flex-wrap:wrap;gap:18px;margin-top:36px;justify-content:center}
+  .prod{flex:1 1 300px;max-width:362px;background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:22px 22px 20px;transition:.18s ease;display:flex;flex-direction:column}
+  .prod:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 22px 44px -30px rgba(14,27,20,.5)}
+  .prod .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+  .prod .ic{width:38px;height:38px;border-radius:9px;background:var(--sage);display:flex;align-items:center;justify-content:center}
+  .prod .ic svg{width:20px;height:20px;fill:none;stroke:var(--green-d);stroke-width:1.7}
+  .prod .eng{font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--green-d);
+    background:rgba(26,111,73,.07);border:1px solid #DCE6DC;padding:5px 10px;border-radius:20px;
+    display:inline-flex;align-items:center;gap:6px}
+  .prod .eng b{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block}
+  .prod .nm{font-size:19.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+  .prod .nm sup{font-size:10px;color:var(--muted);font-weight:500;margin-left:1px;top:-.7em}
+  .prod .cat{font-size:11.5px;color:var(--green);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-top:3px}
+  .prod .desc{font-size:13.5px;color:var(--slate);margin-top:11px;line-height:1.5;flex:1}
+  .prod .brains{margin-top:14px;padding-top:13px;border-top:1px solid var(--line);
+    display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--muted);line-height:1.45}
+  .prod .brains svg{flex:none;width:15px;height:15px;stroke:var(--green);fill:none;stroke-width:1.5;margin-top:1px}
+  .prod .stat{margin-top:14px;display:flex;align-items:baseline;gap:7px}
+  .prod .stat .v{font-family:var(--serif);font-size:22px;color:var(--ink);line-height:1}
+  .prod .stat .l{font-size:11.5px;color:var(--muted)}
+
+  /* workflow visual */
+  .wf{margin-top:36px}
+  .wf-cap{text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:14px}
+  .wf-inputs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+  .wf-chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;color:var(--green-d);
+    background:var(--sage);border:1px solid #DCE6DC;padding:7px 14px;border-radius:30px}
+  .wf-chip svg{width:14px;height:14px;stroke:var(--green-d);fill:none;stroke-width:1.7}
+
+  .wf-flow{display:flex;align-items:flex-start;gap:6px;position:relative;padding:0 4px}
+  .wf-flow::before{content:'';position:absolute;top:24px;left:9%;right:9%;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--green-l),var(--green))}
+  .wf-pulse{position:absolute;top:19px;left:9%;width:12px;height:12px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 0 6px rgba(26,111,73,.14);z-index:3;animation:wfflow 6.5s cubic-bezier(.65,0,.35,1) infinite}
+  @keyframes wfflow{0%{left:9%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:91%;opacity:0}}
+  @media(prefers-reduced-motion:reduce){.wf-pulse{display:none}}
+  .wf-item{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;text-align:center}
+  .wf-item.actor{flex:1.15}
+  .wf-dot{width:50px;height:50px;border-radius:50%;background:#fff;border:1.5px solid var(--green);
+    color:var(--green-d);font-family:var(--serif);font-size:17px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 18px -10px rgba(26,111,73,.55);transition:.18s ease}
+  .wf-item:hover .wf-dot{background:var(--green);color:#fff;transform:translateY(-2px)}
+  .wf-end{height:50px;padding:0 16px;border-radius:11px;background:var(--green);color:#fff;
+    display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;white-space:nowrap;
+    box-shadow:0 10px 22px -12px rgba(18,78,52,.75)}
+  .wf-end svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7}
+  .wf-lab{margin-top:13px}
+  .wf-lab .t{font-size:13px;font-weight:600;color:var(--ink);line-height:1.25}
+  .wf-lab .d{font-size:11px;color:var(--green);font-weight:600;margin-top:4px;letter-spacing:.01em}
+  .wf-item.actor .wf-lab .d{color:var(--muted);font-weight:500}
+
+  .wf-ai{margin-top:36px;display:flex;align-items:center;gap:20px;background:var(--green-d);
+    border-radius:12px;padding:18px 24px;flex-wrap:wrap}
+  .wf-ai .lab{font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+  .wf-ai .tags{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+  .wf-ai .tag{font-size:12.5px;color:#fff;background:rgba(255,255,255,.13);padding:6px 13px;border-radius:20px}
+
+  /* feed-in funnel from inputs into the flow */
+  .wf-feed{display:flex;justify-content:center;margin:-16px 0 20px}
+  .wf-feed i{display:block;width:2px;height:28px;border-radius:2px;position:relative;
+    background:linear-gradient(var(--green-l),var(--green))}
+  .wf-feed i::after{content:'';position:absolute;bottom:-2px;left:50%;width:7px;height:7px;
+    transform:translateX(-50%) rotate(45deg);border-right:2px solid var(--green);border-bottom:2px solid var(--green)}
+
+  /* sequential node light-up, synced to the travelling pulse */
+  .wf-item:not(.actor) .wf-dot{animation:nodeGlow 6.5s linear infinite}
+  .wf-flow .wf-item:nth-child(3) .wf-dot{animation-delay:.45s}
+  .wf-flow .wf-item:nth-child(4) .wf-dot{animation-delay:1.25s}
+  .wf-flow .wf-item:nth-child(5) .wf-dot{animation-delay:2.05s}
+  .wf-flow .wf-item:nth-child(6) .wf-dot{animation-delay:2.85s}
+  .wf-flow .wf-item:nth-child(7) .wf-dot{animation-delay:3.65s}
+  .wf-flow .wf-item:nth-child(8) .wf-dot{animation-delay:4.45s}
+  .wf-flow .wf-item:nth-child(9) .wf-dot{animation-delay:5.25s}
+  .wf-item:hover .wf-dot{background:var(--green)!important;color:#fff!important;transform:translateY(-2px)}
+  @keyframes nodeGlow{
+    0%,15%,100%{background:#fff;color:var(--green-d);border-color:var(--green);
+      box-shadow:0 8px 18px -10px rgba(26,111,73,.55);transform:translateY(0)}
+    5%{background:var(--green);color:#fff;border-color:var(--green);
+      box-shadow:0 0 0 6px rgba(26,111,73,.16),0 12px 24px -8px rgba(26,111,73,.7);transform:translateY(-3px)}
+  }
+
+  /* on-scroll reveal */
+  .wf-reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+  .wf-reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    .wf-item:not(.actor) .wf-dot{animation:none}
+    .wf-reveal{opacity:1;transform:none;transition:none}
+  }
+
+  /* AI split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .ailist{margin-top:20px}
+  .ai{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+  .ai:last-child{border-bottom:1px solid var(--line)}
+  .ai .ic{flex:none;width:38px;height:38px;border-radius:7px;background:#fff;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--green-d)}
+  .ai .ic svg{width:19px;height:19px}
+  .ai h3{font-size:16px;margin-bottom:4px}
+  .ai p{font-size:14px;color:var(--slate)}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px;
+    box-shadow:0 18px 50px -34px rgba(14,27,20,.4)}
+  .panel .ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .panel .ph .ttl{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .chip{font-size:11.5px;font-weight:600;color:var(--green-d);background:var(--sage);
+    padding:5px 11px;border-radius:20px}
+  .scorebar{height:8px;background:var(--line);border-radius:5px;overflow:hidden;margin:8px 0 4px}
+  .scorebar span{display:block;height:100%;background:var(--green)}
+  .krow{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .krow:last-child{border:none}
+  .krow .k{color:var(--slate)} .krow .v{color:var(--ink);font-weight:600}
+  .dot-ok{color:var(--green)} .dot-warn{color:var(--gold)}
+
+  /* CTA band */
+  .ctaband{background:var(--green-d);color:#fff;padding:54px 0}
+  .ctaband .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+  .ctaband h2{color:#fff;font-size:clamp(26px,3.4vw,40px)}
+  .ctaband p{color:rgba(255,255,255,.82);font-size:17px;margin-top:14px}
+  .ctaband .right{display:flex;gap:14px;justify-content:flex-end;flex-wrap:wrap}
+
+  /* footer */
+  footer{background:var(--ink);color:#A8B3AC;padding:48px 0 28px;font-size:14px}
+  footer .cols{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:34px;padding-bottom:30px;
+    border-bottom:1px solid rgba(255,255,255,.1)}
+  footer .logo{color:#fff}
+  footer h4{color:#fff;font-size:13px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+  footer ul{list-style:none} footer li{margin-bottom:9px} footer a:hover{color:#fff}
+  footer .fnote{max-width:24em;margin-top:14px;line-height:1.6;color:#8C978F}
+  footer .bottom{display:flex;justify-content:space-between;padding-top:24px;flex-wrap:wrap;gap:10px;
+    color:#7A857E;font-size:13px}
+
+  @media(max-width:900px){
+    .hero .grid,.split,.ctaband .grid{grid-template-columns:1fr;gap:36px}
+    .visual{margin:0 auto;max-width:340px}
+    .stats .row{grid-template-columns:repeat(2,1fr);gap:28px 0}
+    .stats .s{border-left:none;padding-left:0}
+    .caps{grid-template-columns:repeat(2,1fr)}
+    .wf-flow{flex-direction:column;align-items:stretch;gap:12px;padding:0}
+    .wf-flow::before,.wf-pulse{display:none}
+    .wf-item,.wf-item.actor{flex:none;flex-direction:row;align-items:center;gap:14px;text-align:left}
+    .wf-lab{margin-top:0}
+    .wf-end{width:max-content}
+    .wf-ai{flex-direction:column;align-items:flex-start;gap:12px}
+    .wf-ai .tags{margin-left:0}
+    .navlinks,.util{display:none}
+    footer .cols{grid-template-columns:1fr 1fr}
+    .ctaband .right{justify-content:flex-start}
+  }
+  @media(max-width:560px){.caps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="util">
+  <div class="wrap">
+    <a href="#">Insights</a><a href="#">Careers</a><a href="#">Contact</a><a href="#">Client Login</a>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="mk"></span> CarbonOS</div>
+    <div class="navlinks">
+      <a href="#">Platform</a><a href="#">Services</a><a href="#">Industries</a>
+      <a href="#">Intelligence</a><a href="#">Marketplace</a>
+    </div>
+    <div class="navbtns">
+      <a class="btn btn-outline" href="#">Talk to us</a>
+      <a class="btn btn-primary" href="#">Request a briefing</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">AI-native carbon infrastructure</div>
+      <h1 class="serif">Build, finance and monetize<br><span class="accent">carbon projects</span> — end to end.</h1>
+      <p class="lead">Five AI engines run the entire carbon project lifecycle — from financial modelling to registry submission — so every decision is driven by data, not guesswork. Built by carbon scientists, financial engineers and AI researchers.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#">Request a briefing</a>
+        <a class="btn btn-outline" href="#suite">Explore the suite</a>
+      </div>
+      <div class="note">Algorithmic · audited · carbon-expert · across 42 jurisdictions — Verra · Gold Standard · ACR · CAR · J-Credit</div>
+    </div>
+    <div class="visual" id="visual"></div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap">
+    <div class="lab">Working alongside leading developers, financiers, validators and public agencies worldwide.</div>
+    <div class="logos">
+      <span>NORTHWIND</span><span>ATLAS CAPITAL</span><span>VERIDIAN</span>
+      <span>MERIDIAN ENERGY</span><span>HELIOS FUND</span>
+    </div>
+  </div>
+</div>
+
+<section class="stats">
+  <div class="wrap row">
+    <div class="s"><div class="num">147<span class="u">projects</span></div><div class="lab">Active project pipelines under management</div></div>
+    <div class="s"><div class="num">18.4M<span class="u">tCO₂e</span></div><div class="lab">Projected credits across the portfolio</div></div>
+    <div class="s"><div class="num">$287M<span class="u">USD</span></div><div class="lab">Transacted ecosystem value to date</div></div>
+    <div class="s"><div class="num">42<span class="u">markets</span></div><div class="lab">Jurisdictions across compliance &amp; voluntary</div></div>
+  </div>
+</section>
+
+<section class="sec alt" id="suite">
+  <div class="wrap">
+    <div class="sec-head" style="max-width:47em">
+      <div class="eyebrow">The suite</div>
+      <h2 class="serif">Five engines. One operating system.</h2>
+      <p>Every stage of a carbon project runs on a purpose-built OS — each powered by proprietary models trained on real project outcomes. Together they take the guesswork out of building, financing and monetizing carbon.</p>
+    </div>
+    <div class="suite">
+
+      <div class="prod">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 3v18"/></svg></div>
+          <span class="eng"><b></b> Geospatial AI</span>
+        </div>
+        <div class="nm">Architect<sup>™</sup></div>
+        <div class="cat">Project Engineering OS</div>
+        <div class="desc">Designs the project itself — boundaries, baselines and monitoring plans, generated from satellite, soil and land-use data.</div>
+        <div class="brains"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg><span>Models additionality and baselines straight from earth-observation data — no manual GIS.</span></div>
+        <div class="stat"><span class="v">42,500 ha</span><span class="l">modelled in minutes</span></div>
+      </div>
+
+      <div class="prod">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 7-8M21 8v5M21 8h-5"/></svg></div>
+          <span class="eng"><b></b> Monte Carlo engine</span>
+        </div>
+        <div class="nm">Carbonator<sup>™</sup></div>
+        <div class="cat">Carbon Finance OS</div>
+        <div class="desc">Builds the financial model and capital stack, then stress-tests revenue across thousands of price and yield scenarios.</div>
+        <div class="brains"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg><span>Runs 10,000 simulations per project to price risk, ROI and funding need.</span></div>
+        <div class="stat"><span class="v">10,000</span><span class="l">scenarios per run</span></div>
+      </div>
+
+      <div class="prod">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M7 3h10v18H7zM10 12l2 2 4-4"/></svg></div>
+          <span class="eng"><b></b> Approval-prediction model</span>
+        </div>
+        <div class="nm">CreditRegistry<sup>™</sup></div>
+        <div class="cat">Registry Submission OS</div>
+        <div class="desc">Assembles registry-ready documentation and predicts approval before you ever submit to Verra, Gold Standard or ACR.</div>
+        <div class="brains"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg><span>Scores validation readiness and flags the exact gaps blocking issuance.</span></div>
+        <div class="stat"><span class="v">94%</span><span class="l">approval prediction</span></div>
+      </div>
+
+      <div class="prod">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></div>
+          <span class="eng"><b></b> Matching engine</span>
+        </div>
+        <div class="nm">CredGen<sup>™</sup></div>
+        <div class="cat">Credit Generation OS</div>
+        <div class="desc">Matches your project to the highest-yielding methodology across 100+ protocols and engineers the credit schema.</div>
+        <div class="brains"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg><span>Searches every protocol to maximise issued credits per hectare.</span></div>
+        <div class="stat"><span class="v">100+</span><span class="l">methodologies</span></div>
+      </div>
+
+      <div class="prod">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h8M16 6h4M4 12h4M12 12h8M4 18h10M18 18h2"/><circle cx="14" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg></div>
+          <span class="eng"><b></b> Optimization engine</span>
+        </div>
+        <div class="nm">CreditOptimizer<sup>™</sup></div>
+        <div class="cat">Yield Optimization OS</div>
+        <div class="desc">Optimizes issuance timing, buffer-pool allocation and pricing to extract maximum value from every tonne.</div>
+        <div class="brains"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg><span>Continuously tunes yield, vintage and price against live market signals.</span></div>
+        <div class="stat"><span class="v">+12.5%</span><span class="l">avg yield uplift</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="workflow">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">How it works</div>
+      <h2 class="serif">One continuous workflow — developer to buyer</h2>
+      <p>CarbonOS replaces a fragmented chain of consultants, registries and brokers with a single platform that carries every project from concept to sale.</p>
+    </div>
+
+    <div class="wf wf-reveal">
+      <div class="wf-cap">What you bring</div>
+      <div class="wf-inputs">
+        <span class="wf-chip"><svg viewBox="0 0 24 24"><path d="M3 20l6-9 4 6 3-4 5 7z"/></svg> Land &amp; assets</span>
+        <span class="wf-chip"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4"/></svg> Methodology</span>
+        <span class="wf-chip"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 10-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Geography</span>
+        <span class="wf-chip"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg> Capital</span>
+      </div>
+
+      <div class="wf-feed"><i></i></div>
+
+      <div class="wf-flow">
+        <div class="wf-pulse"></div>
+
+        <div class="wf-item actor">
+          <div class="wf-end"><svg viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M9 21v-5h6v5"/></svg> Developers</div>
+          <div class="wf-lab"><div class="t">Supply</div><div class="d">Submit &amp; manage</div></div>
+        </div>
+
+        <div class="wf-item"><div class="wf-dot">1</div><div class="wf-lab"><div class="t">Concept</div><div class="d">Architect</div></div></div>
+        <div class="wf-item"><div class="wf-dot">2</div><div class="wf-lab"><div class="t">Design</div><div class="d">Architect</div></div></div>
+        <div class="wf-item"><div class="wf-dot">3</div><div class="wf-lab"><div class="t">Finance</div><div class="d">Carbonator</div></div></div>
+        <div class="wf-item"><div class="wf-dot">4</div><div class="wf-lab"><div class="t">Validation</div><div class="d">CreditRegistry</div></div></div>
+        <div class="wf-item"><div class="wf-dot">5</div><div class="wf-lab"><div class="t">Verification</div><div class="d">CreditRegistry</div></div></div>
+        <div class="wf-item"><div class="wf-dot">6</div><div class="wf-lab"><div class="t">Issuance</div><div class="d">CredGen</div></div></div>
+        <div class="wf-item"><div class="wf-dot">7</div><div class="wf-lab"><div class="t">Monetize</div><div class="d">CreditOptimizer</div></div></div>
+
+        <div class="wf-item actor">
+          <div class="wf-end"><svg viewBox="0 0 24 24"><path d="M3 6h17l-2 10H6zM3 6L2 3M9 21a1 1 0 100-2 1 1 0 000 2zM16 21a1 1 0 100-2 1 1 0 000 2z"/></svg> Buyers</div>
+          <div class="wf-lab"><div class="t">Demand</div><div class="d">Discover &amp; purchase</div></div>
+        </div>
+      </div>
+
+      <div class="wf-ai">
+        <div class="lab">Five engines · one platform · trained on 500+ project outcomes</div>
+        <div class="tags">
+          <span class="tag">Architect</span>
+          <span class="tag">Carbonator</span>
+          <span class="tag">CredGen</span>
+          <span class="tag">CreditOptimizer</span>
+          <span class="tag">CreditRegistry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow">The connective brain</div>
+      <h2 class="serif" style="font-size:clamp(26px,3.2vw,36px);margin:12px 0 12px">One assistant across all five engines</h2>
+      <p style="font-size:17px">Carbon Copilot reads from Architect, Carbonator, CredGen, CreditOptimizer and CreditRegistry at once — turning every model output into a clear answer and a recommended next move.</p>
+      <div class="ailist">
+        <div class="ai">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <div><h3>Ask anything, in plain language</h3><p>Query every engine at once — methodology fit, funding gap, approval odds, buyer match.</p></div>
+        </div>
+        <div class="ai">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 17l6-6 4 4 8-8M21 7v5M21 7h-5"/></svg></div>
+          <div><h3>Predicts before you commit</h3><p>Forecasts issuance probability, yield and price across scenarios — no guesswork.</p></div>
+        </div>
+        <div class="ai">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 12l2 2 4-4M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg></div>
+          <div><h3>Recommends the next move</h3><p>Turns model output into the specific action that raises your opportunity score.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ph"><span class="ttl">Project Opportunity Assessment</span><span class="chip">Excellent · 92/100</span></div>
+      <div style="font-size:15px;font-weight:600;color:var(--ink)">Boreal Afforestation — Alberta, Canada</div>
+      <div style="font-size:13px;color:var(--muted);margin:3px 0 14px">Verra VM0047 · 42,500 ha · Federal OBPS + Alberta TIER</div>
+      <div class="scorebar"><span style="width:92%"></span></div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Opportunity score</div>
+      <div class="krow"><span class="k"><span class="dot-ok">●</span> Carbon additionality</span><span class="v">High</span></div>
+      <div class="krow"><span class="k"><span class="dot-ok">●</span> Permanence risk</span><span class="v">Low</span></div>
+      <div class="krow"><span class="k"><span class="dot-warn">●</span> Registry velocity</span><span class="v">14.2 mo</span></div>
+      <div class="krow"><span class="k">Projected credits</span><span class="v">250,000 tCO₂e/yr</span></div>
+      <div class="krow"><span class="k">Success probability</span><span class="v">87.4%</span></div>
+      <div class="krow"><span class="k">Projected floor value</span><span class="v">$3.7M / yr</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ctaband">
+  <div class="wrap grid">
+    <div>
+      <h2 class="serif">Bring your carbon project to the platform built to deliver it.</h2>
+      <p>Speak with our team about feasibility, financing or registry readiness — and see CarbonOS applied to your project.</p>
+    </div>
+    <div class="right">
+      <a class="btn btn-light" href="#">Request a briefing</a>
+      <a class="btn btn-outline" href="#" style="color:#fff;border-color:rgba(255,255,255,.4)">Explore credits</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div class="logo"><span class="mk"></span> CarbonOS</div>
+        <p class="fnote">The operating system for global carbon markets. Build. Finance. Verify. Monetize.</p>
+      </div>
+      <div><h4>Platform</h4><ul><li><a href="#">Project Design</a></li><li><a href="#">Capital Stack</a></li><li><a href="#">Registry Navigator</a></li><li><a href="#">Marketplace</a></li></ul></div>
+      <div><h4>Industries</h4><ul><li><a href="#">Forestry &amp; Land</a></li><li><a href="#">Energy</a></li><li><a href="#">Agriculture</a></li><li><a href="#">Government</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">Insights</a></li><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+    </div>
+    <div class="bottom">
+      <span>© 2026 CarbonOS. All rights reserved. · Mockup with illustrative data.</span>
+      <span>Privacy · Terms · Disclosures</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Flat, elegant line-globe (SVG) — professional, no glow */
+(function(){
+  const S=460, c=S/2, R=S*0.40;
+  const ns='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(ns,'svg');
+  svg.setAttribute('viewBox','0 0 '+S+' '+S);
+  function el(t,a){const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+  /* outer ring */
+  svg.appendChild(el('circle',{cx:c,cy:c,r:R,fill:'#F6F8F5',stroke:'#D7DED8','stroke-width':1}));
+  /* latitudes (ellipses) */
+  for(let i=1;i<=3;i++){const ry=R*Math.cos(i*Math.PI/8)*0;}
+  [0.78,0.5,0.0,-0.5,-0.78].forEach(f=>{
+    const ry=R*Math.sqrt(1-f*f);
+    svg.appendChild(el('ellipse',{cx:c,cy:c-f*R*0,transform:'',rx:R,ry:Math.max(ry,1),
+      cy:c - f*R, fill:'none',stroke:'#CBD6CE','stroke-width':0.9}));
+  });
+  /* meridians */
+  for(let k=0;k<6;k++){const rx=R*Math.abs(Math.cos(k*Math.PI/6));
+    svg.appendChild(el('ellipse',{cx:c,cy:c,rx:Math.max(rx,1),ry:R,fill:'none',
+      stroke:'#CBD6CE','stroke-width':0.9}));}
+  svg.appendChild(el('line',{x1:c,y1:c-R,x2:c,y2:c+R,stroke:'#CBD6CE','stroke-width':0.9}));
+  /* plotted project nodes */
+  const nodes=[[-.45,-.30],[.15,-.55],[.55,-.10],[-.20,.20],[.30,.40],[-.55,.05],[.05,-.15],[.40,.05],[-.30,-.55]];
+  nodes.forEach(([x,y])=>{
+    const px=c+x*R*0.92, py=c+y*R*0.92;
+    svg.appendChild(el('circle',{cx:px,cy:py,r:6.5,fill:'#1A6F49','fill-opacity':0.14}));
+    svg.appendChild(el('circle',{cx:px,cy:py,r:3,fill:'#1A6F49'}));
+  });
+  /* a couple of connection arcs */
+  function arc(a,b){const p1=[c+a[0]*R*0.92,c+a[1]*R*0.92],p2=[c+b[0]*R*0.92,c+b[1]*R*0.92];
+    const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2-40;
+    svg.appendChild(el('path',{d:`M${p1[0]} ${p1[1]} Q ${mx} ${my} ${p2[0]} ${p2[1]}`,
+      fill:'none',stroke:'#2E9468','stroke-width':1.1,'stroke-opacity':.55}));}
+  arc(nodes[0],nodes[2]);arc(nodes[1],nodes[4]);arc(nodes[5],nodes[7]);
+  document.getElementById('visual').appendChild(svg);
+})();
+
+/* reveal-on-scroll for the workflow visual */
+(function(){
+  const els=document.querySelectorAll('.wf-reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return;}
+  const io=new IntersectionObserver((ents)=>{
+    ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.25});
+  els.forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>

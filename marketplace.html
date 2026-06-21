@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Carbon Marketplace — Browse 147+ verified projects | CarbonOS</title>
+<meta name="description" content="The CarbonOS Marketplace — browse live carbon projects, featured offerings, the Carbon Exchange and the Capital Marketplace. Every project AI-diligenced, every transaction settled on rails." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://carbonos.io/marketplace.html" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231A6F49'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ffffff'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+.proj{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.18s;display:flex;flex-direction:column}
+.proj:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 22px 50px -30px rgba(14,27,20,.4)}
+.proj-img{aspect-ratio:16/9;background:linear-gradient(135deg,#2E9468 0%,#1A6F49 100%);position:relative;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5)}
+.proj-img svg{width:60px;height:60px;fill:none;stroke:currentColor;stroke-width:1.2}
+.proj-img.forest{background:linear-gradient(135deg,#2E9468 0%,#124E34 100%)}
+.proj-img.ocean{background:linear-gradient(135deg,#1C4D8F 0%,#0E2D52 100%)}
+.proj-img.dac{background:linear-gradient(135deg,#7A857E 0%,#46544C 100%)}
+.proj-img.soil{background:linear-gradient(135deg,#B8893B 0%,#7A5A20 100%)}
+.proj-img.methane{background:linear-gradient(135deg,#D08C20 0%,#8A5C12 100%)}
+.proj-img.biochar{background:linear-gradient(135deg,#46544C 0%,#0E1B14 100%)}
+.proj .scores{position:absolute;top:14px;left:14px;display:flex;gap:6px}
+.proj .sc{background:rgba(255,255,255,.95);color:var(--green-d);font-size:11px;font-weight:700;padding:5px 10px;border-radius:14px}
+.proj .price{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.95);color:var(--ink);font-size:13px;font-weight:600;padding:5px 11px;border-radius:6px}
+.proj .body{padding:20px;flex:1;display:flex;flex-direction:column}
+.proj .meta{font-size:11.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.proj h3{font-size:17px;line-height:1.3;margin-bottom:6px}
+.proj .loc{font-size:13px;color:var(--slate);margin-bottom:14px}
+.proj .stats-r{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:14px}
+.proj .stats-r div{text-align:center}
+.proj .stats-r .v{font-family:var(--serif);font-size:18px;color:var(--ink);line-height:1}
+.proj .stats-r .l{font-size:11px;color:var(--muted);margin-top:3px}
+.proj .lk{font-size:13px;font-weight:600;color:var(--green);margin-top:auto}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;padding:16px;background:var(--mist);border-radius:10px;border:1px solid var(--line);align-items:center}
+.filters .lab{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-right:8px}
+.filters select{font-size:13px;padding:7px 11px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font-family:var(--sans);cursor:pointer}
+.market-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+@media(max-width:980px){.market-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.market-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="util">
+  <div class="wrap">
+    <div class="left"><span class="live"><b></b> Markets open · VCM Index 7.42 USD · +1.2%</span></div>
+    <div class="right"><a href="resources.html">Insights</a><a href="company.html">Company</a><a href="contact.html">Contact</a><a href="login.html"><strong>Client Login</strong></a></div>
+  </div>
+</div>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="mk"></span> CarbonOS</a>
+    <div class="navlinks">
+      <div><a href="platform.html">Platform</a></div>
+      <div><a href="solutions.html">Solutions</a></div>
+      <div><a href="marketplace.html">Marketplace</a></div>
+      <div><a href="intelligence.html">Intelligence</a></div>
+      <div><a href="resources.html">Resources</a></div>
+      <div><a href="pricing.html">Pricing</a></div>
+    </div>
+    <div class="navbtns">
+      <a class="btn btn-outline" href="login.html">Sign in</a>
+      <a class="btn btn-primary" href="signup.html">Get started</a>
+    </div>
+  </div>
+</nav>
+
+<section class="banner">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Home</a> / Marketplace</div>
+    <h1 class="serif">The carbon marketplace, rebuilt.</h1>
+    <p>147+ live projects. Every one AI-diligenced, registry-verified, transparently priced. Buy, finance, forward-contract or auction — all on rails.</p>
+    <div class="pillnav">
+      <a href="#projects" class="active">All projects</a>
+      <a href="#offers">Featured offerings</a>
+      <a href="#exchange">Carbon Exchange</a>
+      <a href="#capital">Capital Marketplace</a>
+    </div>
+    <div class="filters">
+      <span class="lab">Filter</span>
+      <select><option>Any methodology</option><option>Forestry (ARR)</option><option>REDD+</option><option>Blue carbon</option><option>Soil carbon</option><option>Direct air capture</option><option>Biochar</option><option>Methane capture</option></select>
+      <select><option>Any region</option><option>North America</option><option>LATAM</option><option>EU</option><option>Africa</option><option>APAC</option></select>
+      <select><option>Any registry</option><option>Verra</option><option>Gold Standard</option><option>ACR</option><option>CAR</option><option>Puro</option><option>Isometric</option></select>
+      <select><option>Any vintage</option><option>2024</option><option>2025</option><option>2026</option><option>Forward 2027</option><option>Forward 2028+</option></select>
+      <select><option>Any price</option><option>&lt; $10</option><option>$10–$25</option><option>$25–$100</option><option>$100+</option></select>
+      <select><option>Any rating</option><option>CCP-labelled</option><option>A+ / A</option><option>B+ / B</option></select>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="sec" id="projects">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:14px">
+      <div>
+        <div class="eyebrow">All projects</div>
+        <h2 class="serif" style="font-size:28px;margin-top:8px">147 verified projects</h2>
+      </div>
+      <div style="font-size:13px;color:var(--muted)">Sorted by AI Buyer Diligence™ score · descending</div>
+    </div>
+
+    <div class="market-grid">
+
+      <a class="proj" href="#">
+        <div class="proj-img forest">
+          <div class="scores"><span class="sc">A+ · 92</span><span class="sc">CCP</span></div>
+          <div class="price">$11.20 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M12 2v18M5 9l7-7 7 7M5 16l7-7 7 7"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Forestry · ARR · Verra VM0047</div>
+          <h3>Boreal Afforestation — Alberta</h3>
+          <div class="loc">Canada · 42,500 ha · Vintage 2026–2056</div>
+          <div class="stats-r"><div><div class="v">250k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">87%</div><div class="l">Success prob.</div></div><div><div class="v">30y</div><div class="l">Crediting</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img ocean">
+          <div class="scores"><span class="sc">A · 88</span></div>
+          <div class="price">$28.40 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Blue carbon · Mangrove · GS</div>
+          <h3>Sundarbans Mangrove Restoration</h3>
+          <div class="loc">Bangladesh · 8,200 ha · Vintage 2025–2055</div>
+          <div class="stats-r"><div><div class="v">62k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">84%</div><div class="l">Success prob.</div></div><div><div class="v">30y</div><div class="l">Crediting</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img dac">
+          <div class="scores"><span class="sc">A+ · 96</span><span class="sc">CCP</span></div>
+          <div class="price">$184 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M4 12h16M4 8h16M4 16h16M8 4v16M16 4v16"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">DAC · Engineered removal · Isometric</div>
+          <h3>Helios DAC Facility — Iceland</h3>
+          <div class="loc">Iceland · Geothermal-powered · Vintage 2026+</div>
+          <div class="stats-r"><div><div class="v">40k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">99%</div><div class="l">Permanence</div></div><div><div class="v">10kY</div><div class="l">Storage</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img soil">
+          <div class="scores"><span class="sc">A · 85</span></div>
+          <div class="price">$13.80 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M3 17h18M3 13h18M3 9h18M3 5h18"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Soil carbon · Verra VM0042</div>
+          <h3>Pampas Regenerative Agriculture</h3>
+          <div class="loc">Argentina · 124,000 ha · Vintage 2026–2031</div>
+          <div class="stats-r"><div><div class="v">180k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">82%</div><div class="l">Success prob.</div></div><div><div class="v">5y</div><div class="l">Crediting</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img methane">
+          <div class="scores"><span class="sc">A+ · 91</span></div>
+          <div class="price">$9.40 / t</div>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Methane · Landfill · ACR</div>
+          <h3>Maharashtra Landfill Methane Capture</h3>
+          <div class="loc">India · 12 sites · Vintage 2026–2036</div>
+          <div class="stats-r"><div><div class="v">420k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">89%</div><div class="l">Success prob.</div></div><div><div class="v">10y</div><div class="l">Crediting</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img biochar">
+          <div class="scores"><span class="sc">A · 87</span><span class="sc">CCP</span></div>
+          <div class="price">$148 / t</div>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Biochar · Engineered · Puro.earth</div>
+          <h3>Pacific Northwest Biochar Network</h3>
+          <div class="loc">United States · 6 facilities · Vintage 2026+</div>
+          <div class="stats-r"><div><div class="v">18k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">94%</div><div class="l">Permanence</div></div><div><div class="v">100y+</div><div class="l">Storage</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img forest">
+          <div class="scores"><span class="sc">B+ · 78</span></div>
+          <div class="price">$5.80 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M3 20l6-9 4 6 3-4 5 7z"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">REDD+ · VM0048 · Jurisdictional</div>
+          <h3>Acre Jurisdictional REDD+ Program</h3>
+          <div class="loc">Brazil · 14M ha · ART TREES nested</div>
+          <div class="stats-r"><div><div class="v">3.8M</div><div class="l">tCO₂e / yr</div></div><div><div class="v">71%</div><div class="l">Success prob.</div></div><div><div class="v">10y</div><div class="l">Crediting</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img ocean">
+          <div class="scores"><span class="sc">A · 86</span></div>
+          <div class="price">$32 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Blue carbon · Seagrass · Verra</div>
+          <h3>Baja California Seagrass Restoration</h3>
+          <div class="loc">Mexico · 3,400 ha · Vintage 2026–2046</div>
+          <div class="stats-r"><div><div class="v">22k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">79%</div><div class="l">Success prob.</div></div><div><div class="v">20y</div><div class="l">Crediting</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+      <a class="proj" href="#">
+        <div class="proj-img dac">
+          <div class="scores"><span class="sc">A · 84</span></div>
+          <div class="price">$210 / t</div>
+          <svg viewBox="0 0 24 24"><path d="M4 12h16M8 4v16M16 4v16"/></svg>
+        </div>
+        <div class="body">
+          <div class="meta">Mineralization · Puro.earth</div>
+          <h3>Omani Basalt CO₂ Mineralization</h3>
+          <div class="loc">Oman · 24kt capacity · Vintage 2027+</div>
+          <div class="stats-r"><div><div class="v">24k</div><div class="l">tCO₂e / yr</div></div><div><div class="v">99%</div><div class="l">Permanence</div></div><div><div class="v">10kY</div><div class="l">Storage</div></div></div>
+          <span class="lk">View project →</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center;margin-top:36px">
+      <a class="btn btn-primary btn-lg" href="signup.html">Sign in to see all 147 projects →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured -->
+<section class="sec alt" id="offers">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Featured offerings</div>
+      <h2 class="serif" style="font-size:32px">Curated by the CarbonOS investment team.</h2>
+      <p>Hand-selected projects with verified additionality, top-quartile success probability and clear path to issuance.</p>
+    </div>
+    <div class="grid-3" style="margin-top:30px">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z"/></svg></div><h3>Removal Portfolio 2026</h3><p>Diversified DAC, biochar and mineralization basket — 100k tCO₂e committed, $148 blended price.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20l6-9 4 6 3-4 5 7z"/></svg></div><h3>High-Integrity Nature Bundle</h3><p>CCP-labelled ARR + blue carbon portfolio across 4 jurisdictions — 500k tCO₂e annual.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></div><h3>Compliance-Eligible Tranche</h3><p>CORSIA-eligible credits with US Cap-and-Trade fungibility — 220k tCO₂e available.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Exchange -->
+<section class="sec" id="exchange">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Carbon Exchange</div>
+      <h2 class="serif" style="font-size:32px">An institutional venue for spot, forward and auction trading.</h2>
+      <p>Live order book across vintages, methodologies and registries. Brokers, traders, corporates, funds and governments — converging on transparent pricing.</p>
+    </div>
+    <div class="cmptable" style="margin-top:30px">
+      <table>
+        <tr><th>Instrument</th><th>Bid</th><th>Ask</th><th>Last</th><th>24h Vol</th><th>Open Int</th></tr>
+        <tr><td><strong>VCM-COMP-2026</strong> · Spot</td><td>$7.38</td><td>$7.46</td><td>$7.42</td><td>1.2M t</td><td>—</td></tr>
+        <tr><td><strong>ARR-FOR-2027</strong> · Forward</td><td>$11.10</td><td>$11.40</td><td>$11.20</td><td>410k t</td><td>2.4M t</td></tr>
+        <tr><td><strong>REDD-2026</strong> · Spot</td><td>$5.30</td><td>$5.50</td><td>$5.40</td><td>290k t</td><td>—</td></tr>
+        <tr><td><strong>BCHAR-2026</strong> · Spot</td><td>$146</td><td>$152</td><td>$148</td><td>8k t</td><td>—</td></tr>
+        <tr><td><strong>DAC-FOR-2028</strong> · Forward</td><td>$172</td><td>$188</td><td>$184</td><td>22k t</td><td>180k t</td></tr>
+        <tr><td><strong>CCP-PREM-2026</strong> · Spot</td><td>$11.05</td><td>$11.35</td><td>$11.20</td><td>340k t</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Capital marketplace -->
+<section class="sec alt" id="capital">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Capital Marketplace</div>
+      <h2 class="serif" style="font-size:32px">Project financing deal flow.</h2>
+      <p>$1.2B in tracked capital across 38 funds — matched to projects by AI Funding Match™.</p>
+    </div>
+    <div class="grid-3" style="margin-top:30px">
+      <div class="card"><h3>Borrowers</h3><p>Project developers seeking development capital, bridge financing, pre-purchase agreements, debt or equity.</p><span class="lk" style="margin-top:14px;display:block">38 active raises →</span></div>
+      <div class="card"><h3>Investors</h3><p>Climate funds, family offices, sovereigns, dev banks, traders and corporates — get matched deal flow with AI memos.</p><span class="lk" style="margin-top:14px;display:block">340+ funders →</span></div>
+      <div class="card"><h3>Co-financing</h3><p>Syndicate larger raises through structured co-financing with built-in waterfall accounting and LP reporting.</p><span class="lk" style="margin-top:14px;display:block">$74M syndicated →</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ctaband">
+  <div class="wrap grid">
+    <div>
+      <h2 class="serif">List your project. Buy your portfolio. Run the desk.</h2>
+      <p>Every transaction settled on rails — diligenced, contracted, paid and retired.</p>
+    </div>
+    <div class="right">
+      <a class="btn btn-light btn-lg" href="signup.html">Get started</a>
+      <a class="btn btn-outline btn-lg" href="contact.html" style="color:#fff;border-color:rgba(255,255,255,.4)">Talk to sales</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="index.html"><span class="mk"></span> CarbonOS</a><p class="fnote">The operating system for the global carbon economy.</p></div>
+      <div><h4>Marketplace</h4><ul><li><a href="#projects">All projects</a></li><li><a href="#offers">Featured offerings</a></li><li><a href="#exchange">Exchange</a></li><li><a href="#capital">Capital</a></li></ul></div>
+      <div><h4>Platform</h4><ul><li><a href="platform.html">Architecture</a></li><li><a href="intelligence.html">Intelligence</a></li></ul></div>
+      <div><h4>Solutions</h4><ul><li><a href="solutions.html#developers">Developers</a></li><li><a href="solutions.html#buyers">Buyers</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="company.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div><h4>Trust</h4><ul><li><a href="trust.html">Security</a></li><li><a href="trust.html#privacy">Privacy</a></li></ul></div>
+    </div>
+    <div class="bottom"><span>© 2026 CarbonOS, Inc. · Illustrative pricing for demo purposes.</span><span class="links"><a href="trust.html#privacy">Privacy</a><a href="trust.html#terms">Terms</a></span></div>
+  </div>
+</footer>
+</body>
+</html>
