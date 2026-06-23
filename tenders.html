@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bid &amp; Tender Management — Decarb AI OS</title>
+<meta name="description" content="Institutional-grade bid and tender management for carbon credit procurement. Managed and unmanaged tenders for CORSIA, government procurement, Article 6 and corporate offset programs." />
+<meta name="keywords" content="carbon tender management, CORSIA tenders, carbon bid management, carbon credit procurement, carbon RFP, emissions tender, environmental asset procurement, carbon auction, bid evaluation AI" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://decarbai.os/tenders.html" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231A6F49'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ffffff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght;500;600;700&family=Newsreader:opsz,wght..72,400;6..72,500;6..72,600&family=JetBrains+Mono:wght;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<style>
+.tender-types{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px}
+.tender-type{background:#fff;border:1px solid var(--line);border-radius:12px;padding:32px;transition:.18s;position:relative;overflow:hidden}
+.tender-type:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 22px 50px -30px rgba(14,27,20,.4)}
+.tender-type .badge-t{position:absolute;top:20px;right:20px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:14px}
+.tender-type .badge-t.managed{background:var(--sage);color:var(--green-d)}
+.tender-type .badge-t.self{background:#F0EDFF;color:#5B3FA1}
+.tender-type h3{font-size:22px;margin:14px 0 10px}
+.tender-type p{font-size:14.5px;color:var(--slate);line-height:1.55}
+.tender-type ul{list-style:none;margin:18px 0 0;padding:0}
+.tender-type li{padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;color:var(--slate);display:flex;gap:9px;align-items:flex-start}
+.tender-type li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);margin-top:8px;flex:none}
+.flow-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:30px}
+.flow-step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 14px;text-align:center;position:relative}
+.flow-step::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;z-index:1}
+.flow-step:last-child::after{display:none}
+.flow-step .n{font-family:var(--serif);font-size:18px;color:var(--green)}
+.flow-step .t{font-size:12.5px;font-weight:600;color:var(--ink);margin-top:4px}
+.flow-step .d{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
+.corsia-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:30px}
+.corsia-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:24px;transition:.18s}
+.corsia-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.corsia-card h4{font-size:16px;margin-bottom:8px}
+.corsia-card p{font-size:13.5px;color:var(--slate);line-height:1.5}
+.eval-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.eval-feat{display:flex;gap:14px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.eval-feat .ic{width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);flex:none}
+.eval-feat .ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7}
+.eval-feat h4{font-size:14.5px;margin-bottom:3px}
+.eval-feat p{font-size:13px;color:var(--slate);line-height:1.45}
+@media(max-width:980px){
+  .tender-types,.eval-features{grid-template-columns:1fr}
+  .flow-grid{grid-template-columns:1fr 1fr 1fr}
+  .flow-step::after{display:none}
+  .corsia-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .flow-grid{grid-template-columns:1fr 1fr}
+  .corsia-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Utility bar -->
+<div class="util">
+  <div class="wrap">
+    <div class="left">
+      <span class="live"><b></b> Platform live · AI-powered decarbonisation</span>
+    </div>
+    <div class="right">
+      <a href="resources.html">Insights</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html"><strong>Sign in</strong></a>
+    </div>
+  </div>
+</div>
+
+<!-- Main nav -->
+<nav class="topnav">
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="mk"></span> Decarb AI OS</a>
+    <div class="navlinks">
+      <div><a href="platform.html">Platform</a></div>
+      <div><a href="solutions.html">Solutions</a></div>
+      <div><a href="tenders.html" style="color:var(--green-d)">Tenders</a></div>
+      <div><a href="marketplace.html">Marketplace</a></div>
+      <div><a href="intelligence.html">Intelligence</a></div>
+      <div><a href="resources.html">Resources</a></div>
+      <div><a href="pricing.html">Pricing</a></div>
+    </div>
+    <div class="navbtns">
+      <a class="btn btn-outline" href="login.html">Sign in</a>
+      <a class="btn btn-primary" href="signup.html">Get started free</a>
+      <button class="mob-toggle" aria-label="Menu" aria-expanded="false"><svg class="burger" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg><svg class="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Banner -->
+<section class="banner">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">Home</a> / Tenders</div>
+    <h1 class="serif">Bid &amp; Tender Management</h1>
+    <p>Institutional-grade tender operations for carbon credit procurement — managed or self-service. Purpose-built for CORSIA, government procurement, Article 6 bilateral tenders and corporate offset programs.</p>
+    <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn btn-primary" href="signup.html">Start issuing tenders →</a>
+      <a class="btn btn-outline" href="#managed">Managed vs. unmanaged</a>
+    </div>
+  </div>
+</section>
+
+<!-- Tender types -->
+<section class="sec" id="managed">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Two models</div>
+      <h2 class="serif">Managed or self-service. Your choice.</h2>
+      <p>Whether you need full-service bid management with compliance guardrails or prefer to run your own evaluation with AI-assisted tools — the platform adapts to your procurement style.</p>
+    </div>
+
+    <div class="tender-types">
+      <div class="tender-type">
+        <span class="badge-t managed">Managed</span>
+        <div style="width:42px;height:42px;border-radius:9px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:22px;height:22px"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>Managed Tenders</h3>
+        <p>Full-service bid management. We handle the operational complexity — your team focuses on strategy and award decisions.</p>
+        <ul>
+          <li>Tender design and publication with compliance templates</li>
+          <li>Bidder invitation management — registry, manual or bulk import</li>
+          <li>Anonymised Q&amp;A board with moderation and broadcast</li>
+          <li>Sealed-bid submission with tamper-evident timestamps</li>
+          <li>AI-powered technical and commercial evaluation</li>
+          <li>Shortlist, award and regret notice generation</li>
+          <li>Standstill period management and audit trail</li>
+          <li>Post-award contract execution and performance tracking</li>
+        </ul>
+      </div>
+      <div class="tender-type">
+        <span class="badge-t self">Self-service</span>
+        <div style="width:42px;height:42px;border-radius:9px;background:#F0EDFF;display:flex;align-items:center;justify-content:center;color:#5B3FA1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:22px;height:22px"><path d="M4 4h12l4 4v12H4z"/><path d="M4 10h16M9 4v6"/></svg></div>
+        <h3>Unmanaged Tenders</h3>
+        <p>Self-service tools for organisations that want direct control. AI assists at every step — you make every decision.</p>
+        <ul>
+          <li>Tender builder wizard — 11-step structured creation flow</li>
+          <li>Flexible requirement definition (eligibility + evaluation criteria)</li>
+          <li>Bidder registry integration with tier-based filtering</li>
+          <li>AI-assisted bid scoring and compliance checking</li>
+          <li>Configurable evaluation weightings and scorecards</li>
+          <li>Bid comparison analytics with outlier detection</li>
+          <li>Custom award workflows and notification templates</li>
+          <li>Full audit log with immutable action trail</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tender lifecycle flow -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Tender lifecycle</div>
+      <h2 class="serif">From publication to award, on one platform.</h2>
+      <p>Every step of the tender lifecycle is managed in the same system — no email chains, no spreadsheet evaluations, no paper trails.</p>
+    </div>
+    <div class="flow-grid">
+      <div class="flow-step"><div class="n">1</div><div class="t">Design</div><div class="d">Requirements, criteria, templates</div></div>
+      <div class="flow-step"><div class="n">2</div><div class="t">Publish</div><div class="d">Invite bidders, open Q&amp;A</div></div>
+      <div class="flow-step"><div class="n">3</div><div class="t">Receive</div><div class="d">Sealed bids, compliance check</div></div>
+      <div class="flow-step"><div class="n">4</div><div class="t">Evaluate</div><div class="d">AI scoring + human review</div></div>
+      <div class="flow-step"><div class="n">5</div><div class="t">Award</div><div class="d">Shortlist, notify, standstill</div></div>
+      <div class="flow-step"><div class="n">6</div><div class="t">Execute</div><div class="d">Contract, deliver, report</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CORSIA & compliance -->
+<section class="sec" id="corsia">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Compliance-grade tenders</div>
+      <h2 class="serif">CORSIA, Article 6 and government procurement.</h2>
+      <p>Purpose-built workflows for the specific compliance requirements of aviation carbon offset procurement, Paris Agreement Article 6 bilateral tenders and government climate procurement programs.</p>
+    </div>
+    <div class="corsia-grid">
+      <div class="corsia-card">
+        <div style="width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:18px;height:18px"><path d="M3 7l3-3 3 3M6 4v16M21 17l-3 3-3-3M18 20V4"/></svg></div>
+        <h4>ICAO CORSIA</h4>
+        <p>Airlines procuring CORSIA-eligible offsets need institutional-grade tender processes. The platform enforces CORSIA Eligible Emissions Unit (CEU) eligibility, programme approval status, vintage requirements and first-transfer verification across all bids.</p>
+      </div>
+      <div class="corsia-card">
+        <div style="width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:18px;height:18px"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a14 14 0 010 20M12 2a14 14 0 000 20"/></svg></div>
+        <h4>Article 6 bilateral</h4>
+        <p>Governments structuring bilateral agreements under Paris Article 6.2 need corresponding adjustment tracking, host-country authorization verification and ITMO compliance. The platform handles the full bilateral tender and negotiation lifecycle.</p>
+      </div>
+      <div class="corsia-card">
+        <div style="width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:18px;height:18px"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg></div>
+        <h4>Government procurement</h4>
+        <p>National and regional governments running climate procurement programs require transparent, auditable tender processes. The platform provides sealed-bid management, fairness controls, evaluation audit trails and public disclosure tooling.</p>
+      </div>
+      <div class="corsia-card">
+        <div style="width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:18px;height:18px"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6"/></svg></div>
+        <h4>Corporate offset RFPs</h4>
+        <p>Fortune 500 companies running structured offset procurement processes. Portfolio-grade sourcing with methodology diversification, vintage management and CSRD/SBTi alignment built into the evaluation criteria.</p>
+      </div>
+      <div class="corsia-card">
+        <div style="width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:18px;height:18px"><path d="M12 2l9 4v6c0 5-3.8 9-9 10-5.2-1-9-5-9-10V6z"/></svg></div>
+        <h4>Multilateral tenders</h4>
+        <p>Development banks, climate funds and multilateral institutions running large-scale carbon credit procurement. Multi-tranche tenders with phased evaluation, country allocation and development impact scoring.</p>
+      </div>
+      <div class="corsia-card">
+        <div style="width:38px;height:38px;border-radius:7px;background:var(--sage);display:flex;align-items:center;justify-content:center;color:var(--green-d);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:18px;height:18px"><path d="M9 12l2 2 4-4M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg></div>
+        <h4>Voluntary market tenders</h4>
+        <p>Brokers, traders and aggregators running procurement across the voluntary market. Multi-standard eligibility, cross-registry matching and ICVCM Core Carbon Principles compliance verification.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI evaluation -->
+<section class="sec alt" id="evaluate">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">AI-powered evaluation</div>
+      <h2 class="serif">Tender AI that scores, checks and flags — so humans decide.</h2>
+      <p>The AI evaluation engine processes every submission against your criteria, checks compliance automatically, detects outliers and anomalies, and presents structured scorecards — leaving the award decision to your team.</p>
+    </div>
+    <div class="eval-features">
+      <div class="eval-feat">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg></div>
+        <div>
+          <h4>Compliance auto-check</h4>
+          <p>Every bid automatically verified against tender requirements — eligibility, documentation completeness, certification status and methodology fit.</p>
+        </div>
+      </div>
+      <div class="eval-feat">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 7-8"/></svg></div>
+        <div>
+          <h4>Technical scoring</h4>
+          <p>AI evaluates technical proposals against weighted criteria — additionality, permanence, co-benefits, MRV quality and delivery risk.</p>
+        </div>
+      </div>
+      <div class="eval-feat">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M21 7v5M21 7h-5"/></svg></div>
+        <div>
+          <h4>Commercial analysis</h4>
+          <p>Price benchmarking against live market data, volume-discount modelling, delivery schedule feasibility and total cost analysis.</p>
+        </div>
+      </div>
+      <div class="eval-feat">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></div>
+        <div>
+          <h4>Outlier detection</h4>
+          <p>Statistical analysis flags anomalous pricing, unusual bid patterns and potential collusion indicators for human review.</p>
+        </div>
+      </div>
+      <div class="eval-feat">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zM4 22c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <div>
+          <h4>Bidder reputation</h4>
+          <p>Track record scoring based on historical delivery, past project performance, registry approval rates and counterparty references.</p>
+        </div>
+      </div>
+      <div class="eval-feat">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9-9 10-5.2-1-9-5-9-10V6z"/></svg></div>
+        <div>
+          <h4>Audit trail</h4>
+          <p>Immutable, tamper-evident log of every action — bid receipt timestamps, evaluation scores, committee decisions and award rationale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Platform mockup -->
+<section class="sec">
+  <div class="wrap grid-2">
+    <div>
+      <div class="eyebrow">Tender command center</div>
+      <h2 class="serif" style="font-size:clamp(28px,3.2vw,40px);margin:12px 0 14px">Everything in one view.</h2>
+      <p style="font-size:16.5px">Track active tenders, bid submissions, evaluation progress, awards and compliance from a single command center. Real-time analytics show bidder engagement, price distributions and timeline adherence.</p>
+      <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="signup.html">Start a tender →</a>
+        <a class="btn btn-outline" href="contact.html">Talk to our team</a>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mb"><b class="r"></b><b class="y"></b><b class="g"></b><span class="url">app.decarbai.os/tenders/command</span></div>
+      <div class="mock-body">
+        <div class="mock-side">
+          <div class="si a"><i></i> Command center</div>
+          <div class="si"><i></i> Active tenders</div>
+          <div class="si"><i></i> Bid inbox</div>
+          <div class="si"><i></i> Evaluation</div>
+          <div class="si"><i></i> Awards</div>
+          <div class="si"><i></i> Q&amp;A board</div>
+          <div class="si"><i></i> Compliance</div>
+          <div class="si"><i></i> Reports</div>
+        </div>
+        <div class="mock-main">
+          <div class="mtile-sm"><div class="l">Active tenders</div><div class="v">—</div></div>
+          <div class="mtile-sm"><div class="l">Bids received</div><div class="v">—</div></div>
+          <div class="mtile-sm"><div class="l">Under evaluation</div><div class="v">—</div></div>
+          <div class="mtile-sm full">
+            <div class="l">Bid distribution by methodology</div>
+            <div class="mock-bar">
+              <i style="height:82%"></i><i style="height:65%"></i><i style="height:96%"></i><i style="height:50%"></i>
+              <i style="height:74%"></i><i style="height:42%"></i><i style="height:90%"></i><i style="height:58%"></i>
+              <i style="height:78%"></i><i style="height:100%"></i><i style="height:62%"></i><i style="height:85%"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- For bidders -->
+<section class="sec alt">
+  <div class="wrap">
+    <div class="sec-head center" style="text-align:center;margin:0 auto">
+      <div class="eyebrow">For bidders</div>
+      <h2 class="serif">Responding to tenders? We've built for you too.</h2>
+      <p>Project developers and credit suppliers get dedicated tools to discover tenders, prepare proposals, manage submissions and track outcomes.</p>
+    </div>
+    <div class="grid-4" style="margin-top:36px">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></div>
+        <h3>Discover</h3>
+        <p>Browse open tenders matched to your project type, methodology, geography and credit vintage. Get notified when relevant tenders are published.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M4 10h16M9 4v6"/></svg></div>
+        <h3>Prepare</h3>
+        <p>AI-assisted proposal preparation — auto-fill compliance requirements, generate technical narratives and build pricing models from your project data.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9-9 10-5.2-1-9-5-9-10V6z"/></svg></div>
+        <h3>Submit</h3>
+        <p>Sealed-bid submission with tamper-evident timestamps and SHA-256 fingerprinting. Compliance pre-check before you hit submit.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 7-8"/></svg></div>
+        <h3>Track</h3>
+        <p>Real-time bid status, Q&amp;A updates, evaluation progress and award notifications — all in your bidder dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="ctaband">
+  <div class="wrap grid">
+    <div>
+      <h2 class="serif">Carbon markets need institutional procurement. Now they have it.</h2>
+      <p>Whether you're issuing tenders or responding to them — Decarb AI OS brings institutional-grade operations to carbon credit procurement.</p>
+    </div>
+    <div class="right">
+      <a class="btn btn-light btn-lg" href="signup.html">Get started free</a>
+      <a class="btn btn-outline btn-lg" href="contact.html" style="color:#fff;border-color:rgba(255,255,255,.4)">Talk to our team</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="logo" href="index.html"><span class="mk"></span> Decarb AI OS</a>
+        <p class="fnote">The world's decarbonisation platform. AI-powered emissions strategy, carbon credit origination, bid management and environmental asset intelligence.</p>
+        <div class="badges">
+          <span>SOC 2 Type II</span><span>ISO 27001</span><span>GDPR</span><span>CSRD-ready</span>
+        </div>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="platform.html#project-os">Project Creation OS</a></li>
+          <li><a href="platform.html#consulting">Consulting Cloud</a></li>
+          <li><a href="platform.html#finance">Finance Infrastructure</a></li>
+          <li><a href="platform.html#intelligence">Intelligence Cloud</a></li>
+          <li><a href="platform.html#buyer-suite">Buyer Suite</a></li>
+          <li><a href="platform.html#deal-room">Deal Execution</a></li>
+          <li><a href="tenders.html">Tender Management</a></li>
+          <li><a href="platform.html#compliance">Compliance &amp; Reporting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="solutions.html#developers">Project Developers</a></li>
+          <li><a href="solutions.html#buyers">Corporate Buyers</a></li>
+          <li><a href="solutions.html#investors">Investors &amp; Funds</a></li>
+          <li><a href="solutions.html#consultants">Consulting Firms</a></li>
+          <li><a href="solutions.html#enterprise">Enterprise</a></li>
+          <li><a href="solutions.html#government">Government</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="resources.html">Library</a></li>
+          <li><a href="resources.html#research">Research</a></li>
+          <li><a href="resources.html#methodologies">Methodologies</a></li>
+          <li><a href="resources.html#registries">Registry guides</a></li>
+          <li><a href="resources.html#academy">Academy</a></li>
+          <li><a href="resources.html#api">Developer API</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="resources.html#research">Newsroom</a></li>
+          <li><a href="signup.html">Partners</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="trust.html">Security</a></li>
+          <li><a href="trust.html#compliance">Compliance</a></li>
+          <li><a href="trust.html#privacy">Privacy</a></li>
+          <li><a href="trust.html#terms">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© 2026 Decarb AI OS. All rights reserved.</span>
+      <span class="links">
+        <a href="trust.html#privacy">Privacy</a>
+        <a href="trust.html#terms">Terms</a>
+        <a href="trust.html#cookies">Cookies</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

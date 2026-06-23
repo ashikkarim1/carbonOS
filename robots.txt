@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /login.html
 
-Sitemap: https://carbonos.io/sitemap.xml
+Sitemap: https://decarbai.os/sitemap.xml
